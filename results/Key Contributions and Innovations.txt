@@ -1,0 +1,23 @@
+The **main contributions and innovations** of this research (from **2510.07187v1**) are:
+
+1. **Dynamic Constraints on Debris-Disc Masses and Body Sizes**:
+   - Introduces a **new method** to dynamically constrain the **total mass** of debris discs and the **size distribution of their largest bodies** (e.g., Pluto-sized vs. smaller planetesimals), addressing a key uncertainty in debris-disc studies.
+
+2. **Refutation of Primordial Pluto-Dominated Discs**:
+   - Demonstrates that **primordial Pluto-sized bodies cannot dominate the mass** of bright debris discs (e.g., Fomalhaut’s disc) without causing observable dynamical broadening over time.
+   - Shows this conclusion is **robust** to variations in size distribution parameters (e.g., *qₚ*, *s*).
+
+3. **Constraints on Recent Formation or Smaller Bodies**:
+   - Finds that **Pluto-sized bodies could only dominate** if they formed **recently (<150 Myr)**—unlikely for older systems like Fomalhaut (~440 Myr).
+   - Alternatively, the disc mass must be dominated by **smaller bodies (~100 km)**, aligning with collisional replenishment models.
+
+4. **Rejection of Alternative Scenarios**:
+   - Rules out mechanisms like **shepherding planets, collisional damping, or gas drag** as explanations for maintaining narrow discs if large primordial bodies were present.
+
+5. **Independent Evidence Against Large Primordial Bodies**:
+   - Provides a **novel, model-independent argument** that bright debris discs are **not dominated by large primordial objects**, supporting the idea that their mass is primarily in **smaller, collisionally active planetesimals**.
+
+### **Key Implications**:
+- Challenges assumptions about the composition of debris discs, favoring **small-body dominance**.
+- Offers a **dynamical tool** to infer unseen planetesimal populations in exo-Kuiper belts.
+- Strengthens the link between observed dust and unseen smaller bodies in debris systems.

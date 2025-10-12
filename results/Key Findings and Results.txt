@@ -1,0 +1,25 @@
+Here are the **key findings** from the research (based on the provided context from *2510.07187v1*):
+
+1. **Disc Stability Depends on Mass and Body Size**:
+   - Narrow, eccentric debris discs (like Fomalhaut’s) can **maintain their shape** over the system’s 440 Myr age **only if** the disc mass and largest debris size are **below critical thresholds**.
+   - If the disc is **too massive** or the largest bodies are **too large**, the disc **scatters into a broader structure** (incompatible with observations) on timescales **orders of magnitude shorter** than the system’s age (Figure 3 shows this bifurcation).
+
+2. **Constraints on Fomalhaut’s Disc**:
+   - The disc’s **narrow, eccentric shape** implies:
+     - The **total disc mass** must be limited (likely dominated by bodies **smaller than Pluto**).
+     - The **largest debris size** cannot be too large, or self-scattering would disrupt the disc.
+
+3. **Challenges in Debris Disc Science**:
+   - **Indirect detection limits**: Current instruments only detect dust (≤cm-sized), leaving the **mass and size distribution of larger planetesimals** (which dominate disc mass) **unknown**.
+   - **Unreliable mass estimates**: Previous methods (extrapolating from dust mass) are flawed due to unknown maximum body sizes and theoretical assumptions.
+
+4. **Methodological Insights**:
+   - **N-body simulations** (using REBOUND) effectively modeled disc broadening as a function of **disc mass** and **largest body size**, validating the stability constraints.
+   - **Collisional dynamics** (e.g., from *Janković et al. 2024*) suggest that **collisional damping** of large planetesimals is negligible in Fomalhaut’s disc, contrasting with earlier superparticle-based models (e.g., *Kral et al. 2013*).
+
+5. **Broader Implications**:
+   - The results support the idea that **bright debris discs** (like Fomalhaut’s) are **not dominated by Pluto-sized objects** but by smaller bodies.
+   - The study provides a **dynamical framework** to infer unseen planetesimal properties from observable disc structures.
+
+**Key Takeaway**:
+The research demonstrates that **Fomalhaut’s narrow disc can only persist if its mass and largest bodies are constrained**, offering a way to indirectly probe the unseen planetesimal population in debris discs.

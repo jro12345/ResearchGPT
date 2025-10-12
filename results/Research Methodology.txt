@@ -1,0 +1,25 @@
+The authors of this study (**Pearce et al., 2023**) employed a **multi-faceted computational and theoretical methodology**, combining:
+
+1. **Numerical Simulations (N-body & Secular Dynamics)**
+   - Used **shepherding simulations** (Source 1) to model interactions between planets and debris discs, varying parameters like disc mass, debris size, and planet locations.
+   - Implemented an **N-ring secular perturbation approach** (Source 3) to solve orbital dynamics, decoupling equations into harmonic oscillators and using eigenvalue analysis (via the *C Eigenlibrary*).
+   - Compared their approach to prior models (e.g., Hahn 2003, Sefilian et al. 2023) for validation.
+
+2. **Analytical Modeling**
+   - Derived **dynamical constraints** (Source 4) by iterating equations to link disc mass, largest body size, and collisional evolution (e.g., using size distribution power laws, *n(s) ∝ s⁻α*).
+   - Applied **collisional cascade theory** (Dohnanyi 1969) and primordial size distributions (Krivov & Wyatt 2021) to infer mass dominance by large bodies (e.g., Pluto-sized objects).
+
+3. **Comparative Analysis**
+   - Critiqued prior studies (Source 5) like **Boley et al. (2012)** and **Tamayo et al. (2013)** for simplifications (e.g., massless discs, limited size ranges) and highlighted discrepancies with newer findings (e.g., Janković et al. 2024 on collisional damping).
+
+4. **Indirect Inference**
+   - Used **dynamical arguments** (e.g., disc broadening, stability) to indirectly estimate hidden parameters (disc mass, largest body sizes) unobservable via direct imaging (Source 6).
+
+### **Key Tools/Techniques**:
+- **Secular perturbation theory** (for orbital evolution).
+- **Superparticle methods** (for collisional modeling, though critiqued).
+- **Parameter space exploration** (varying disc/planet properties).
+- **Theoretical scaling laws** (e.g., size distributions, mass segregation).
+
+### **Novelty**:
+The study introduces a **new method** to constrain debris disc properties by combining dynamical stability analysis with collisional physics, addressing gaps in observational data.

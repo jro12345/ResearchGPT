@@ -1,0 +1,13 @@
+{
+  "num_documents": 1,
+  "total_chunks": 103,
+  "avg_document_length": 85393.0,
+  "total_text_length": 85393,
+  "document_titles": [
+    "2510.07187v1"
+  ],
+  "document_ids": [
+    "2510.07187v1"
+  ],
+  "avg_chunks_per_doc": 103.0
+}
