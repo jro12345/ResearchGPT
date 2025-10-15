@@ -1,31 +1,25 @@
-"""
-Main execution script for ResearchGPT Assistant - Student Demo Version
-
-This demo shows students exactly what ResearchGPT does with their research papers
-by displaying actual questions and AI-generated answers about the uploaded documents.
-"""
+"""Main execution script for ResearchGPT Assistant"""
 
 from config import Config
 from document_processor import DocumentProcessor
 from research_assistant import ResearchGPTAssistant
 from research_agents import AgentOrchestrator
 import os
-import json
 import time
 import re
 
 def main():
     """
-    Student-friendly demonstration showing actual AI responses to research questions
+    Research GPT assitant
     """
     
     print("=" * 70)
-    print("                    ResearchGPT Assistant Demo")
+    print("                    ResearchGPT Assistant")
     print("=" * 70)
     print("An AI system that reads research papers and answers questions about them")
     print("=" * 70)
     
-    # Step 1: Initialize system (simplified output)
+    # Step 1: Initialize system
     print("\n[1] Starting ResearchGPT Assistant...")
     try:
         config = Config()
@@ -38,7 +32,7 @@ def main():
         print("    Please check your API key configuration")
         return False
     
-    # Step 2: Process documents (simplified)
+    # Step 2: Process documents
     print("\n[2] Loading and analyzing your research papers...")
     sample_papers_dir = config.SAMPLE_PAPERS_DIR
     
@@ -58,7 +52,7 @@ def main():
     # Process documents
     for pdf_file in pdf_files:
         pdf_path = os.path.join(sample_papers_dir, pdf_file)
-        print(f"    Reading: {pdf_file}")
+        print(f"    Processing: {pdf_file}")
         doc_processor.process_document(pdf_path)
     
     # Build search capability
@@ -111,6 +105,27 @@ def main():
         "Key Findings and Results"
     )
     
+    # Question 4: User generated question
+    while True:
+        user_question = ""
+        user_prompt = input("Do you want to ask ResearchGPT a question about this paper? Y/N: ").strip().lower()
+        if user_prompt in ['y', 'yes']:
+            # Proceed to handle user's question
+            user_question = input("Enter your question: ")
+            break
+        elif user_prompt in ['n', 'no']:
+            print("Continuing without user question.")
+            break
+        else:
+            print("Invalid input. Please enter 'Y' or 'N'.")
+    # If user_question is not empty, ask mistral
+    if user_question:
+            _demonstrate_question_answer(
+                research_assistant,
+                user_question,
+                "User Generated Question"
+            )
+
     # Step 5: Show advanced AI reasoning
     print("\n[5] Advanced AI Analysis - Step-by-Step Reasoning:")
     print("=" * 70)
@@ -158,7 +173,9 @@ STEP 5 - Final assessment:
         print(response)
         print("\n" + "-" * 50)
         print("This shows how ResearchGPT breaks down complex questions and reasons through them systematically.")
-        
+        file_name = "Advanced_Analysis.txt"
+        _save_mistral_results(config.ANALYSES_DIR, file_name, response)
+        print(f"Results saved to {file_name}")
     except Exception as e:
         print(f"Error in analysis: {str(e)}")
     
@@ -177,6 +194,7 @@ STEP 5 - Final assessment:
                 summary_text = summary_result.get('summary', '')
                 # Show first part of summary
                 print(summary_text[:800] + "..." if len(summary_text) > 800 else summary_text)
+                _save_mistral_results("results/summaries", "document_summary.text", summary_text)
             else:
                 print("Summary generation failed")
     except Exception as e:
@@ -190,7 +208,7 @@ STEP 5 - Final assessment:
     print("-" * 50)
     try:
         workflow_result = agent_orchestrator.route_task('workflow', {
-            'research_topic': 'machine learning and AI research'
+            'research_topic': 'Fomalhaut’s debris disc and primoridal Plutos'
         })
         if workflow_result.get('success', False):
             questions = workflow_result.get('generated_questions', [])
@@ -261,24 +279,23 @@ def _demonstrate_question_answer(research_assistant, question, topic_title):
         sources_count = len(response.get('sources_used', []))
         
         # Display answer (truncate if too long)
+        topic_title = re.sub(r'\s+', '_', topic_title)
         if len(answer) > 1000:
-            displayed_answer = answer[:1000] + f"\n\n[Answer continues... full response saved to files {topic_title}]"
+            displayed_answer = answer[:1000] + f"\n\n[Answer continues... full response saved to file {topic_title}.txt]"
         else:
-            displayed_answer = answer
+            displayed_answer = answer + f"\n\nResponse saved to files {topic_title}.txt"
 
         # Sanitize topic_title for safe filename
         # Replace invalid characters with underscores and trim to valid length
         safe_filename = re.sub(r'[<>:"/\\|?*]', '_', topic_title.strip())
         safe_filename = safe_filename[:200]  # Limit filename length for safety
-        results_dir = "results"
-        output_file = os.path.join(results_dir, f"{safe_filename}.txt")
-        # Write full answer to file
-        with open(output_file, 'w', encoding='utf-8') as f:
-            f.write(answer)
+        full_text = f"Question:\n{question}\n\nAnswer:\n{answer}"
+        _save_mistral_results("results/analyses", f"{safe_filename}.txt", full_text)
             
-        print(displayed_answer)
+        print(f"\n{displayed_answer}")
         print("~" * 40)
-        print(f"Based on analysis of {sources_count} relevant sections from your paper(s)")
+        if not str(displayed_answer).startswith("You have exceeded"):
+            print(f"Based on analysis of {sources_count} relevant sections from your paper(s)")
         print()
         
         # Brief pause to let students read
@@ -294,17 +311,26 @@ def _build_context_from_chunks(chunks):
         return "No relevant content found"
     
     context_parts = []
-    for chunk_text, score, doc_id in chunks[:3]:  # Use top 3 chunks
+    for chunk_text in chunks[:3]:  # Use top 3 chunks
         context_parts.append(chunk_text[:500])  # Limit chunk size
     
     return "\n\n".join(context_parts)
 
+def _save_mistral_results(output_dir, file_name, results):
+    output_file = os.path.join(output_dir, file_name)
+    try:
+        # Write full summary to file
+        with open(output_file, 'w', encoding='utf-8') as f:
+            f.write(results)
+    except Exception as e:
+        print(f"Error saving mistral results: {str(e)}")
+        
 def _save_demo_results(config):
     """Save simplified demo results for students"""
     try:
-        results_dir = config.RESULTS_DIR
-        if not os.path.exists(results_dir):
-            os.makedirs(results_dir, exist_ok=True)
+        results_summaries_dir = config.RESULTS_SUMMARIES_DIR
+        if not os.path.exists(results_summaries_dir):
+            os.makedirs(results_summaries_dir, exist_ok=True)
         
         # Create a simple summary file
         demo_summary = """# ResearchGPT Assistant Demo Results
@@ -335,7 +361,7 @@ This demonstrates a complete AI research assistant that can help
 you understand and analyze academic papers quickly and effectively.
 """
         
-        with open(os.path.join(results_dir, "demo_summary.md"), 'w') as f:
+        with open(os.path.join(config.RESULTS_SUMMARIES_DIR, "demo_summary.md"), 'w') as f:
             f.write(demo_summary)
             
     except Exception as e:
@@ -346,7 +372,7 @@ if __name__ == "__main__":
     Main entry point for student demonstration
     """
     try:
-        print("Starting ResearchGPT Assistant Student Demo...")
+        print("Starting ResearchGPT Assistant...")
         success = main()
         
         if success:

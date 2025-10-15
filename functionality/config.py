@@ -18,6 +18,9 @@ class Config:
         self.SAMPLE_PAPERS_DIR = "data/sample_papers/"
         self.PROCESSED_DIR = "data/processed/"
         self.RESULTS_DIR = "results/"
+        self.RESULTS_SUMMARIES_DIR = "results/summaries/"
+        self.DOC_STATS_DIR = "results/doc_stats/"
+        self.ANALYSES_DIR = "results/analyses/"
         
         self.CHUNK_SIZE = 1000  # Set text chunk size for processing
         self.OVERLAP = 100      # Set overlap between chunks

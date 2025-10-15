@@ -1,0 +1,61 @@
+### **Comprehensive Summary of the Research Document**
+
+#### **1. Research Objective**
+- **Main Research Question/Hypothesis**:
+  The study investigates whether the **narrow debris disc around Fomalhaut** could be dominated by **primordial Pluto-sized bodies (R ≈ 1000 km)** or if dynamical constraints limit the maximum size of the largest planetesimals. The key hypothesis is that **if the disc were too massive or contained overly large bodies, self-scattering would broaden it beyond observed limits**.
+
+- **Problem Addressed**:
+  - **Debris-disc mass problem**: Observations only detect small (cm-sized) dust, but the **true mass is dominated by unseen large planetesimals**. Extrapolating dust masses to large bodies (e.g., Plutos) yields implausibly high total masses (>1000 M⊕), exceeding protoplanetary disc solid inventories.
+  - **Lack of direct constraints**: No method exists to measure the **sizes of the largest debris bodies** or **total disc mass** without relying on uncertain size-distribution extrapolations.
+  - **Fomalhaut’s narrow disc**: Its **well-resolved, eccentric, and narrow structure** (width ~10–15 AU) provides a testbed for dynamical constraints on mass and body sizes.
+
+---
+
+#### **2. Methodology**
+- **Research Methods**:
+  1. **N-body Simulations**:
+     - Modeled the **dynamical evolution** of Fomalhaut’s disc under self-gravity, varying:
+       - **Total disc mass** (M_disc).
+       - **Size of the largest planetesimals** (R_max).
+     - Tracked how **self-scattering** broadens the disc over time.
+  2. **Analytic Theory**:
+     - Derived a **scaling relation** for disc broadening due to gravitational stirring by large bodies.
+     - Combined with **collisional cascade models** to link dynamical stirring to observable disc width.
+  3. **Collisional Physics**:
+     - Incorporated **collisional damping** (small grains dampening eccentricities) and **shepherding planets** (though found to be negligible for Fomalhaut).
+
+- **Key Technical Approaches**:
+  - **Dynamical Timescale Analysis**: Compared the **disc’s age (440 Myr)** to the **timescale for self-broadening** to exceed observed width.
+  - **Mass–Size Constraints**: Used the condition that the disc **must not have scattered beyond its current width** to derive upper limits on M_disc and R_max.
+  - **Robustness Checks**: Tested additional physics (e.g., gas drag, planetary perturbations) to ensure conclusions held.
+
+---
+
+#### **3. Key Findings**
+- **Primary Results**:
+  - **Fomalhaut’s disc cannot be dominated by Pluto-sized bodies**:
+    - If the mass were dominated by **primordial Plutos (R ≈ 1000 km)**, the disc would have **scattered to a much broader width** than observed within 440 Myr.
+  - **Constraints on Largest Body Sizes**:
+    - The largest primordial bodies must have radii in the range:
+      **5–300 km** (best-fit: **~50–200 km**, or **0.05–0.2 R_Pluto**).
+    - Each body would have **<1% of Pluto’s mass**.
+  - **Total Disc Mass Limit**:
+    - The disc mass must be **≤ a few hundred M⊕** (far below the >1000 M⊕ implied by naive dust extrapolations).
+
+- **Supporting Evidence**:
+  - **N-body Simulations**: Showed that discs with **R_max > 300 km** broaden beyond observations within the system’s age.
+  - **Analytic Scaling**: Predicted broadening consistent with simulations, validating the dynamical constraint.
+  - **Collisional Cascade Models**: Confirmed that **smaller bodies (R < 300 km)** can sustain the observed dust without excessive scattering.
+
+- **Quantitative Results**:
+  | Parameter          | Constraint                     |
+  |--------------------|--------------------------------|
+  | **Largest body radius (R_max)** | 5–300 km (0.005–0.3 R_Pluto) |
+  | **Disc mass (M_disc)**       | ≤ few × 100 M⊕              |
+  | **Disc broadening timescale** | Must exceed 440 Myr          |
+
+---
+
+#### **4. Conclusions and Implications**
+- **Authors’ Conclusions**:
+  - **Dynamical constraints independently support** the idea that **bright

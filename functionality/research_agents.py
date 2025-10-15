@@ -1,15 +1,16 @@
 """
-AI Research Agents for Specialized Tasks - IMPROVED VERSION
+AI Research Agents for Specialized Tasks
 
 Complete implementation with rate limiting, fixed performance tracking,
 and enhanced complex workflow parsing.
 """
 
-import json
 import time
 import logging
 import random
 from typing import List, Dict, Any, Optional
+import os
+import textwrap
 
 class BaseAgent:
     def __init__(self, research_assistant):
@@ -25,7 +26,7 @@ class BaseAgent:
         # Setup logging
         self.logger = logging.getLogger(f"{__name__}.{self.agent_name}")
         
-        # FIXED: Improved performance tracking
+        # Improved performance tracking
         self.tasks_completed = 0
         self.successful_tasks = 0
         self.failed_tasks = 0
@@ -39,7 +40,7 @@ class BaseAgent:
     def _call_mistral_with_rate_limit(self, prompt: str, temperature: Optional[float] = None, 
                                     max_retries: int = 3) -> str:
         """
-        IMPROVEMENT 1: Call Mistral with rate limiting and retry logic
+        Call Mistral with rate limiting and retry logic
         
         Args:
             prompt: Prompt to send to Mistral
@@ -113,7 +114,7 @@ class BaseAgent:
             # This will be overridden by child classes
             result = self._execute_task_implementation(task_input)
             
-            # FIXED: Update performance tracking
+            # Update performance tracking
             execution_time = time.time() - start_time
             self.tasks_completed += 1
             self.total_execution_time += execution_time
@@ -160,9 +161,7 @@ class BaseAgent:
 
 class SummarizerAgent(BaseAgent):
     def __init__(self, research_assistant):
-        """
-        Agent specialized in document summarization with improved rate limiting
-        """
+        """Agent specialized in document summarization with improved rate limiting"""
         super().__init__(research_assistant)
         self.agent_name = "SummarizerAgent"
         
@@ -248,7 +247,7 @@ Please structure your summary as follows:
 Provide a clear, concise summary that captures the essence of the research while being accessible to someone familiar with the field.
             """
             
-            # IMPROVEMENT 1: Use rate-limited API call
+            # Use rate-limited API call
             summary = self._call_mistral_with_rate_limit(summary_prompt, temperature=0.3)
             
             # Extract key topics using simple keyword extraction
@@ -428,7 +427,7 @@ class QAAgent(BaseAgent):
         self.logger.info("QAAgent initialized")
     
     def _execute_task_implementation(self, task_input: Dict[str, Any]) -> Dict[str, Any]:
-        """FIXED: Execute QA task with proper performance tracking"""
+        """Execute QA task with proper performance tracking"""
         question = task_input.get('question', '')
         question_type = task_input.get('type', 'factual')
         
@@ -657,13 +656,13 @@ class ResearchWorkflowAgent(BaseAgent):
         self.qa_agent = QAAgent(research_assistant)
         
         # Workflow-specific settings
-        self.max_questions = 5
+        self.max_questions = 3
         self.analysis_depth = 'comprehensive'
         
         self.logger.info("ResearchWorkflowAgent initialized with sub-agents")
     
     def _execute_task_implementation(self, task_input: Dict[str, Any]) -> Dict[str, Any]:
-        """FIXED: Execute research workflow with proper performance tracking"""
+        """ Execute research workflow with proper performance tracking"""
         if 'research_topic' in task_input:
             return self.conduct_research_session(task_input['research_topic'])
         else:
@@ -710,7 +709,7 @@ Please format as:
 Provide only the numbered questions, one per line.
             """
             
-            # IMPROVEMENT 1: Use rate-limited API call
+            # Use rate-limited API call
             generated_questions_response = self._call_mistral_with_rate_limit(questions_prompt, temperature=0.4)
             
             # Parse generated questions
@@ -743,7 +742,7 @@ Provide only the numbered questions, one per line.
                 # Determine question type for appropriate answering strategy
                 question_type = self._classify_question_type(question)
                 
-                # FIXED: Use the sub-agent's _execute_task_implementation method
+                # Use the sub-agent's _execute_task_implementation method
                 qa_result = self.qa_agent._execute_task_implementation({
                     'question': question,
                     'type': question_type
@@ -755,6 +754,17 @@ Provide only the numbered questions, one per line.
                     'question_type': question_type,
                     'answer_data': qa_result
                 })
+                try:
+                    # Write full summary to file
+                    output_dir = "results/research_questions_generated"
+                    os.makedirs(output_dir, exist_ok=True)
+                    # Construct the full file path using os.path.join
+                    output_path = os.path.join(output_dir, f"generated_research_question{i+1}.txt")
+                    with open(output_path, 'w', encoding='utf-8') as f:
+                        f.write(f"Question {i+1}:\n{textwrap.fill(question, width=80)}\n\n")
+                        f.write(f"Answer:\n{textwrap.fill(qa_result['analysis'], width=80)}\n")
+                except Exception as e:
+                    print(f"Error saving result for question {i+1}: {str(e)}")
             
             session_results['question_answers'] = question_answers
             

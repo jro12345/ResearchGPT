@@ -8,6 +8,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import os
 import re
 import logging
+from pathlib import Path
 
 class DocumentProcessor:
     def __init__(self, config):
@@ -44,7 +45,7 @@ class DocumentProcessor:
         Returns:
             str: Extracted and cleaned text
         """
-        # Implement PDF text extraction
+        # PDF text extraction
         extracted_text = ""
         
         try:
@@ -96,7 +97,7 @@ class DocumentProcessor:
         text = re.sub(r'â€œ|â€\x9d', '"', text)  # Fix quotes
         text = re.sub(r'â€"', '-', text)         # Fix dashes
         
-        # Remove page numbers and headers/footers (basic heuristic)
+        # Remove page numbers and headers/footers
         lines = text.split('\n')
         cleaned_lines = []
         
@@ -197,7 +198,7 @@ class DocumentProcessor:
             self.logger.error(f"Error searching within document {doc_id}: {str(e)}")
             return []
     
-    def save_processed_documents(self, output_dir):
+    def save_processed_document_information(self, output_dir):
         """
         Save processed document data to files
         
@@ -235,7 +236,7 @@ class DocumentProcessor:
             
             # Save chunks for each document
             for doc_id, doc_data in self.documents.items():
-                chunks_file = os.path.join(output_dir, f'{doc_id}_chunks.txt')
+                chunks_file = os.path.join("results/", f'{doc_id}_chunks.txt')
                 with open(chunks_file, 'w', encoding='utf-8') as f:
                     for i, chunk in enumerate(doc_data['chunks']):
                         f.write(f"--- Chunk {i+1} ---\n")
@@ -275,7 +276,7 @@ class DocumentProcessor:
             # Calculate end position
             end = start + chunk_size
 
-            #If this is not the last chunk, try to end at a sentence boundary
+            # If this is not the last chunk, try to end at a sentence boundary
             if end < len(text):
                 # Look for sentence ending within the last 200 characters of the chunk
                 sentence_end_pattern = r'[.!?]\s+'
@@ -351,13 +352,29 @@ class DocumentProcessor:
             self.logger.info(f"  - Raw text length: {len(raw_text)}")
             self.logger.info(f"  - Processed text length: {len(preprocessed_text)}")
             self.logger.info(f"  - Number of chunks: {len(chunks)}")
-            self.save_processed_documents("results")
         
         except Exception as e:
             self.logger.error(f"Error processing document {pdf_path}: {str(e)}")
+        
+        try:
+            self.save_processed_document_information(self.config.DOC_STATS_DIR)
+            self._save_processed_documents(pdf_path)
+        except Exception as e:
+            self.logger.error(f"Error saving documents: {str(e)}")
 
         return doc_id
     
+    def _save_processed_documents(self, pdf_path):
+        source = Path(pdf_path)
+        destination_dir = Path(self.config.PROCESSED_DIR)
+        try:
+            destination_dir.mkdir(parents=True, exist_ok=True)
+            destination = destination_dir / source.name
+
+            destination.write_bytes(source.read_bytes())
+        except Exception as e:
+            self.logger.error(f"Error saving processed document: {str(e)}")
+        
     def _extract_metadata(self, text, pdf_path):
         """
         Extract basic metadata from document text

@@ -4,7 +4,6 @@ from mistralai import Mistral
 import json
 import time
 import logging
-import re
 from typing import List, Dict, Any, Tuple, Optional
 
 class ResearchGPTAssistant:
@@ -224,7 +223,7 @@ Provide a brief explanation of your decision.
             # Make API call using CORRECTED method
             start_time = time.time()
 
-            # FIXED: Use the correct method call
+            # Use the correct method call
             chat_response = self.mistral_client.chat.complete(
                 model=self.config.MODEL_NAME,
                 messages=messages,
@@ -279,6 +278,8 @@ Provide a brief explanation of your decision.
             # Provide more helpful error message
             if "authentication" in str(e).lower() or "unauthorized" in str(e).lower():
                 return "API error: Invalid API key. Please check your Mistral API config in config.py."
+            elif "service tier capacity exceeded for this model" in str(e).lower():
+                return "You have exceeded your capacity for querying current model"
             elif "model" in str(e).lower():
                 return "API error: Invalid model '{self.config.MODEL_NAME}'. Please check your model name."
             else:
@@ -855,7 +856,7 @@ Provide a brief explanation of your decision.
             context_str = self._build_context_from_chunks(relevant_chunks)
             verification_data = self.verify_and_edit_answer(answer, query, context_str)
             final_answer = verification_data['improved_answer']
-        
+
         # Compile complete response
         response = {
             'query': query,
@@ -869,8 +870,8 @@ Provide a brief explanation of your decision.
             'api_calls_made': self.api_calls_made,
             'timestamp': time.time()
         }
-
-        self.logger.info(f"Research question processed successfully in {response['processing_time']:.2f}s")
+        if not answer.startswith("You have exceeded"):
+            self.logger.info(f"Research question processed successfully in {response['processing_time']:.2f}s")
         
         return response
     
