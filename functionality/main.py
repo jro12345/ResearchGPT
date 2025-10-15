@@ -194,7 +194,7 @@ STEP 5 - Final assessment:
                 summary_text = summary_result.get('summary', '')
                 # Show first part of summary
                 print(summary_text[:800] + "..." if len(summary_text) > 800 else summary_text)
-                _save_mistral_results("results/summaries", "document_summary.text", summary_text)
+                _save_mistral_results("results/summaries", "document_summary.txt", summary_text)
             else:
                 print("Summary generation failed")
     except Exception as e:
@@ -317,6 +317,8 @@ def _build_context_from_chunks(chunks):
     return "\n\n".join(context_parts)
 
 def _save_mistral_results(output_dir, file_name, results):
+    if not os.path.exists(output_dir):
+            os.makedirs(output_dir, exist_ok=True)
     output_file = os.path.join(output_dir, file_name)
     try:
         # Write full summary to file
