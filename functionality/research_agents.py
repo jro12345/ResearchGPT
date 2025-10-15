@@ -656,7 +656,7 @@ class ResearchWorkflowAgent(BaseAgent):
         self.qa_agent = QAAgent(research_assistant)
         
         # Workflow-specific settings
-        self.max_questions = 3
+        self.max_questions = 5
         self.analysis_depth = 'comprehensive'
         
         self.logger.info("ResearchWorkflowAgent initialized with sub-agents")

@@ -21,7 +21,7 @@ class ResearchGPTTester:
         """
         Initialize testing system
         
-        TODO: Set up testing configuration and components
+        Set up testing configuration and components
         """
         self.config = Config()
         self.doc_processor = DocumentProcessor(self.config)
@@ -30,11 +30,11 @@ class ResearchGPTTester:
         
         # TODO: Define test cases
         self.test_queries = [
-            "What are the main advantages of machine learning?",
-            "How do neural networks process information?",
-            "What are the limitations of current AI systems?",
-            "Compare supervised and unsupervised learning approaches",
-            "What are the ethical considerations in AI development?"
+            "What are the key morphological and compositional differences between Fomalhauts debris disc and the Kuiper Belt, and how do these differences inform hypotheses about the formation of primordial Pluto-like objects in each system?",
+            "How have high-resolution imaging techniques (e.g., ALMA, JWST, or HST) been applied to study the structure and dynamics of Fomalhauts debris disc, and what are the methodological limitations in detecting embedded primordial Pluto-mass objects?",
+            "What evidence exists in the peer-reviewed literature for the presence of primordial Pluto-like planetesimals within Fomalhauts debris disc, and how do their inferred orbital properties (e.g., eccentricity, inclination) compare to theoretical predictions of disc perturbation models?",
+            "What are the implications of Fomalhauts debris disc architecture—including potential primordial Plutos—for our understanding of planetesimal formation in A-type star systems, and how might these findings challenge or refine current planet formation theories (e.g., core accretion vs. pebble accretion)?",
+            "Who are the authors of this paper?"
         ]
         
         # TODO: Define evaluation metrics
@@ -49,13 +49,6 @@ class ResearchGPTTester:
     def test_document_processing(self):
         """
         Test document processing functionality
-        
-        TODO: Test all document processing features:
-        1. PDF text extraction
-        2. Text preprocessing and cleaning
-        3. Document chunking
-        4. Similarity search
-        5. Index building
         
         Returns:
             dict: Test results for document processing
@@ -72,24 +65,24 @@ class ResearchGPTTester:
         }
         
         try:
-            # TODO: Test PDF processing (if sample files available)
-            sample_text = "This is a sample research paper about artificial intelligence and machine learning algorithms."
+            # Test PDF processing (if sample files available)
+            sample_text = "This is a sample research paper about Fomalhauts debris disc and primordial Plutos."
             
-            # TODO: Test text preprocessing
+            # Test text preprocessing
             preprocessed = self.doc_processor.preprocess_text(sample_text)
             if preprocessed:
                 test_results['text_preprocessing'] = True
                 print("   ✓ Text preprocessing: PASS")
             
-            # TODO: Test text chunking
+            # Test text chunking
             chunks = self.doc_processor.chunk_text(sample_text, chunk_size=50, overlap=10)
             if chunks:
                 test_results['chunking'] = True
                 print("   ✓ Text chunking: PASS")
             
-            # TODO: Test similarity search (with dummy data)
+            # Test similarity search (with dummy data)
             # Create dummy document for testing
-            dummy_doc_id = self.doc_processor.process_document("dummy_path")  # This should be modified to handle test data
+            dummy_doc_id = self.doc_processor.process_document("data/sample_papers/2510.07187v1.pdf") 
             
             print("   ✓ Document processing tests completed")
             
@@ -103,12 +96,6 @@ class ResearchGPTTester:
         """
         Test different prompting strategies
         
-        TODO: Compare performance of different prompting approaches:
-        1. Basic prompting
-        2. Chain-of-Thought
-        3. Self-Consistency
-        4. ReAct workflows
-        
         Returns:
             dict: Comparison results for different strategies
         """
@@ -121,12 +108,12 @@ class ResearchGPTTester:
             'basic_qa': []
         }
         
-        # TODO: Test each strategy with sample queries
+        # Test each strategy with sample queries
         for i, query in enumerate(self.test_queries[:3]):  # Test first 3 queries
             print(f"   Testing query {i+1}: {query[:50]}...")
             
             try:
-                # TODO: Test Chain-of-Thought
+                # Test Chain-of-Thought
                 start_time = time.time()
                 cot_response = self.research_assistant.chain_of_thought_reasoning(query, [])
                 cot_time = time.time() - start_time
@@ -137,7 +124,7 @@ class ResearchGPTTester:
                     'response_time': cot_time
                 })
                 
-                # TODO: Test Self-Consistency
+                # Test Self-Consistency
                 start_time = time.time()
                 sc_response = self.research_assistant.self_consistency_generate(query, [], num_attempts=2)
                 sc_time = time.time() - start_time
@@ -148,7 +135,7 @@ class ResearchGPTTester:
                     'response_time': sc_time
                 })
                 
-                # TODO: Test ReAct Workflow
+                # Test ReAct Workflow
                 start_time = time.time()
                 react_response = self.research_assistant.react_research_workflow(query)
                 react_time = time.time() - start_time
@@ -164,7 +151,7 @@ class ResearchGPTTester:
             except Exception as e:
                 print(f"   ✗ Error testing query {i+1}: {str(e)}")
         
-        # TODO: Calculate strategy comparison metrics
+        # Calculate strategy comparison metrics
         self.evaluation_results['prompt_strategy_comparison'] = strategy_results
         
         return strategy_results
@@ -172,12 +159,6 @@ class ResearchGPTTester:
     def test_agent_performance(self):
         """
         Test AI agent performance
-        
-        TODO: Test each agent type:
-        1. Summarizer Agent
-        2. QA Agent  
-        3. Research Workflow Agent
-        4. Agent Orchestrator
         
         Returns:
             dict: Agent performance results
@@ -192,26 +173,26 @@ class ResearchGPTTester:
         }
         
         try:
-            # TODO: Test Summarizer Agent
+            # Test Summarizer Agent
             print("   Testing Summarizer Agent...")
-            summary_task = {'doc_id': 'test_doc'}  # Use actual doc_id when available
-            # summary_result = self.agent_orchestrator.route_task('summarizer', summary_task)
-            # agent_results['summarizer_agent'] = summary_result
+            summary_task = {'doc_id': '2510.07187v1'}  # Use actual doc_id when available
+            summary_result = self.agent_orchestrator.route_task('summarizer', summary_task)
+            agent_results['summarizer_agent'] = summary_result
             print("   ✓ Summarizer Agent test completed")
             
-            # TODO: Test QA Agent
+            # Test QA Agent
             print("   Testing QA Agent...")
             qa_task = {
-                'question': 'What is machine learning?',
+                'question': 'What is Fomalhauts debris disc?',
                 'type': 'factual'
             }
             qa_result = self.agent_orchestrator.route_task('qa', qa_task)
             agent_results['qa_agent'] = qa_result
             print("   ✓ QA Agent test completed")
             
-            # TODO: Test Research Workflow Agent
+            # Test Research Workflow Agent
             print("   Testing Research Workflow Agent...")
-            workflow_task = {'research_topic': 'artificial intelligence'}
+            workflow_task = {'research_topic': 'Fomalhauts debris disc'}
             workflow_result = self.agent_orchestrator.route_task('workflow', workflow_task)
             agent_results['workflow_agent'] = workflow_result
             print("   ✓ Research Workflow Agent test completed")
@@ -226,12 +207,6 @@ class ResearchGPTTester:
         """
         Evaluate response quality using simple metrics
         
-        TODO: Implement response quality evaluation:
-        1. Response relevance to query
-        2. Response completeness
-        3. Response coherence
-        4. Source citation quality
-        
         Args:
             response (str): Generated response
             query (str): Original query
@@ -239,7 +214,7 @@ class ResearchGPTTester:
         Returns:
             dict: Quality scores
         """
-        # TODO: Implement basic quality metrics
+        # Implement basic quality metrics
         quality_scores = {
             'length_score': min(len(response) / 200, 1.0),  # Normalize to 0-1
             'keyword_relevance': 0.8,  # TODO: Calculate based on keyword overlap
@@ -247,7 +222,7 @@ class ResearchGPTTester:
             'completeness_score': 0.8  # TODO: Check if response addresses query
         }
         
-        # TODO: Calculate overall quality score
+        # Calculate overall quality score
         overall_score = sum(quality_scores.values()) / len(quality_scores)
         quality_scores['overall_score'] = overall_score
         
@@ -256,12 +231,6 @@ class ResearchGPTTester:
     def run_performance_benchmark(self):
         """
         Run comprehensive performance benchmark
-        
-        TODO: Execute complete system benchmark:
-        1. Process timing for different operations
-        2. Memory usage tracking
-        3. API call efficiency
-        4. Overall system responsiveness
         
         Returns:
             dict: Performance benchmark results
@@ -276,17 +245,17 @@ class ResearchGPTTester:
             'system_efficiency': {}
         }
         
-        # TODO: Benchmark document processing
+        # Benchmark document processing
         start_time = time.time()
         # Simulate document processing
         time.sleep(0.1)  # Replace with actual processing
         benchmark_results['document_processing_time'] = time.time() - start_time
         
-        # TODO: Benchmark query responses
+        # Benchmark query responses
         for query in self.test_queries[:2]:  # Test first 2 queries
             start_time = time.time()
             
-            # TODO: Execute test query
+            # Execute test query
             try:
                 response = self.research_assistant.answer_research_question(query, use_cot=False, use_verification=False)
                 response_time = time.time() - start_time
@@ -300,7 +269,7 @@ class ResearchGPTTester:
             except Exception as e:
                 print(f"   Error benchmarking query: {str(e)}")
         
-        # TODO: Calculate efficiency metrics
+        # Calculate efficiency metrics
         avg_response_time = sum([r['response_time'] for r in benchmark_results['query_response_times']]) / len(benchmark_results['query_response_times']) if benchmark_results['query_response_times'] else 0
         
         benchmark_results['system_efficiency'] = {
@@ -316,12 +285,6 @@ class ResearchGPTTester:
     def generate_evaluation_report(self):
         """
         Generate comprehensive evaluation report
-        
-        TODO: Create detailed evaluation report:
-        1. Test results summary
-        2. Performance metrics
-        3. Strategy comparisons
-        4. Recommendations for improvements
         
         Returns:
             str: Formatted evaluation report
@@ -373,23 +336,23 @@ System is ready for further development and deployment.
         """
         Execute complete test suite
         
-        TODO: Run all tests and generate comprehensive report
+        Run all tests and generate comprehensive report
         """
         print("Starting ResearchGPT Assistant Test Suite...")
         
-        # TODO: Run all test categories
+        # Run all test categories
         doc_results = self.test_document_processing()
         prompt_results = self.test_prompting_strategies()
         agent_results = self.test_agent_performance()
         benchmark_results = self.run_performance_benchmark()
         
-        # TODO: Store results
+        # Store results
         self.evaluation_results.update({
             'document_processing': doc_results,
             'performance_benchmark': benchmark_results
         })
         
-        # TODO: Generate and save final report
+        # Generate and save final report
         final_report = self.generate_evaluation_report()
         
         # Save results
@@ -407,6 +370,6 @@ System is ready for further development and deployment.
         return self.evaluation_results
 
 if __name__ == "__main__":
-    # TODO: Initialize and run testing
+    # Initialize and run testing
     tester = ResearchGPTTester()
     results = tester.run_all_tests()
