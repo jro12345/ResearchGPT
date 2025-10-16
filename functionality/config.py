@@ -8,7 +8,7 @@ class Config:
 
         load_dotenv()
         
-        self.MISTRAL_API_KEY = "7HKjZCOl049KPYbABsFwO4Yhg03kIUAx"  # Replace with actual key
+        self.MISTRAL_API_KEY = "7HKjZCOl049KPYbABsFwO4Yhg03kIUAx"
         self.validate_api_key()
         self.MODEL_NAME = "mistral-medium"  # Choose appropriate Mistral model
         self.TEMPERATURE = 0.1  # Set temperature for consistent responses

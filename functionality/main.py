@@ -314,7 +314,7 @@ def _build_context_from_chunks(chunks):
     for chunk_text in chunks[:3]:  # Use top 3 chunks
         context_parts.append(chunk_text[:500])  # Limit chunk size
     
-    return "\n\n".join(context_parts)
+    return "\n\n".join(str(chunk[0]) for chunk in chunks)
 
 def _save_mistral_results(output_dir, file_name, results):
     if not os.path.exists(output_dir):
