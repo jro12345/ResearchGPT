@@ -1,9 +1,4 @@
-"""
-AI Research Agents for Specialized Tasks
-
-Complete implementation with rate limiting, fixed performance tracking,
-and enhanced complex workflow parsing.
-"""
+"""AI Research Agents for Specialized Tasks"""
 
 import time
 import logging
