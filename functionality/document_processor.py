@@ -464,6 +464,9 @@ class DocumentProcessor:
             self.logger.warning("Empty query provided")
             return []
         
+        if self.document_vectors is None:
+            self.logger.error("Document vectors not initialized. Did you call load_documents()?")
+            return []
         try:
             # Transform query using fitted vectorizer
             query_vector = self.vectorizer.transform([query.lower()])
