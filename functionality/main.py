@@ -118,6 +118,7 @@ def main():
             break
         else:
             print("Invalid input. Please enter 'Y' or 'N'.")
+    
     # If user_question is not empty, ask mistral
     if user_question:
             _demonstrate_question_answer(
@@ -213,7 +214,7 @@ STEP 5 - Final assessment:
         if workflow_result.get('success', False):
             questions = workflow_result.get('generated_questions', [])
             if questions:
-                print("ResearchGPT generated these research questions about your paper:")
+                print("ResearchGPT generated these research questions about your paper: [Answers will be saved to corresponding files]")
                 for i, question in enumerate(questions[:5], 1):
                     print(f"{i}. {question}")
         else:
